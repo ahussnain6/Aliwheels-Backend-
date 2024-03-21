@@ -1,0 +1,12 @@
+const express = require("express");
+const {addtocart,Buyerlogin,BuyersignUp,DelCart, cartdata ,sendMail} = require("../controllers/auth-controller");
+const  signupSchema = require("../middleware/auth-middleware");
+const validate = require("../models/validators/auth-validator");
+const router = express.Router();
+router.route("/signup").post(validate(signupSchema),BuyersignUp);
+router.route("/login").post(Buyerlogin);
+router.route("/addtocart").post(addtocart);
+router.route("/getcart/:id").get(cartdata);
+router.route("/delete/:id").delete(DelCart);
+router.route("/sendmail/:email").post(sendMail);
+module.exports = router; 
