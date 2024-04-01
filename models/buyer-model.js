@@ -44,9 +44,8 @@ buyerId :this._id.toString(),
 email:this.email,
 isAdmin:this.isAdmin,
 },
-process.env.JWTKEY,{
-    expiresIn :"30d",
-}
+process.env.JWTKEY,
+{expiresIn :"30d"}
 )
 }catch(error){
     console.error(error);
