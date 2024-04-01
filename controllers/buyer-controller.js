@@ -19,7 +19,7 @@ const sendMail = async (req, res) => {
   var mailOptions = {
     from: process.env.email,
     to: `${email}`,
-    subject: "Car Booking Confirmation",
+    subject: "AliWheels.com: Car Booking Confirmation",
     text: `Your reservation for the ${company} ${name} in the vibrant ${color}
     has been duly acknowledged and appreciated. We sincerely value your trust in us. Rest assured, your chosen vehicle priced at USD ${price} and will be promptly delivered to you within the stipulated timeframe. Warm regards from the team at AliWheels.com.`,
   };
