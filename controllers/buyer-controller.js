@@ -1,6 +1,5 @@
 const Buyer = require("../models/buyer-model");
 const cart = require("../models/cart-model");
-
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const sendMail = async (req, res) => {
@@ -75,10 +74,52 @@ const BuyersignUp = async (req, res) => {
     console.log(error);
   }
 };
+const getemail =async (req,res)=>{
+   const {email} = req.body; 
+  try {
+    const buyer = await Buyer.findOne({ email });
+    if (!buyer) { res.status(400).json({ msg: "Invalid Credientials" });}
+    res.json({buyerId:buyer._id});
+   const token = buyer.generateToken();
+   var transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.email,
+      pass: process.env.password,
+    },
+  });
+  var mailOptions = {
+    from: process.env.email,
+    to: `${email}`,
+    subject: "Reset Your Password",
+    text: `https://aliwheel.web.app/changepassword/${buyer._id}`,
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
 
+      return res.send({Status:"Success"});
+    }
+  });
+} catch (error) {}}
+const updatebuyer = async(req,res)=>{
+  const {id} = req.params;
+  const {password} = req.body;
+  try {
+    const saltRound = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(password,saltRound);
+   const re = await Buyer.findByIdAndUpdate({_id:id},{password:hashpassword},{new:true});
+    return res.json(re);
+  } catch (error) {
+    res.json(error);
+  }}
 const addtocart = async (req, res) => {
-  const {
-    color,
+  const { color,
     company,
     sellerId,
     UserId,
@@ -120,5 +161,7 @@ module.exports = {
   Buyerlogin,
   BuyersignUp,
   sendMail,
+  updatebuyer,
   cartdata,
+  getemail
 };
