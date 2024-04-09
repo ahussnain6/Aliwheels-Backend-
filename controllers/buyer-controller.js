@@ -79,7 +79,7 @@ const getemail =async (req,res)=>{
   try {
     const buyer = await Buyer.findOne({ email });
     if (!buyer) { res.status(400).json({ msg: "Invalid Credientials" });}
-    res.json({buyerId:buyer._id});
+    // res.json({buyerId:buyer._id});
    const token = buyer.generateToken();
    var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -116,6 +116,7 @@ const updatebuyer = async(req,res)=>{
    const re = await Buyer.findByIdAndUpdate({_id:id},{password:hashpassword},{new:true});
     return res.json(re);
   } catch (error) {
+    console.log(error);
     res.json(error);
   }}
 const addtocart = async (req, res) => {
