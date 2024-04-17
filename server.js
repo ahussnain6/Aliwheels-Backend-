@@ -12,7 +12,7 @@ const productrouter = require("./router/product-router");
 const post = require("./models/post-model");
 const corsOptions = {
   origin:"*",
-  methods: "GET, POST, PUT, DELETE, PATCH",
+  methods: "GET, POST, PUT, DELETE, PATCH,HEAD",
   credentials: true,};
 app.use(cors(corsOptions));
 app.use(express.json());
