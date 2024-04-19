@@ -11,7 +11,7 @@ const sellerrouter = require("./router/seller-route");
 const productrouter = require("./router/product-router");
 const post = require("./models/post-model");
 const corsOptions = {
-  origin:"*",
+  origin: "*",
   methods: "GET, POST, PUT, DELETE, PATCH,HEAD",
   credentials: true,};
 app.use(cors(corsOptions));
